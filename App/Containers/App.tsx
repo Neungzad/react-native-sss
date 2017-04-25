@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
+import createStore from '../Config/CreateStore'
 import RootContainer from './RootContainer'
-import createStore from '../Config/CreateStore' 
 
 // create our store
 const store = createStore()
@@ -15,7 +15,11 @@ const store = createStore()
  *
  * We separate like this to play nice with React Native's hot reloading.
  */
-class App extends Component {
+
+export interface Props { }
+export interface State { }
+
+class App extends Component<Props, State> {
   render () {
     return (
       <Provider store={store}>
