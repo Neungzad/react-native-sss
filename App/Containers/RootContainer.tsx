@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StatusBar, StyleSheet } from 'react-native'
-import UserListView from '../Containers/Users/Components/UserListview'
+import AssaListview from '../Containers/Assasins/Components/AssaListview'
 
 export interface Props { }
 export interface State { }
@@ -10,7 +10,7 @@ class RootContainer extends Component<Props, State> {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
-        <UserListView />
+        <AssaListview />
       </View>
     )
   }

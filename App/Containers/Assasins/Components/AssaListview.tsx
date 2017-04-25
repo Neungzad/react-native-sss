@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 
 export interface Props {}
 export interface State {}
 
-class UserListView extends Component<Props, State> {
+class AssaListview extends Component<Props, State> {
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native! SSS .
+          Welcome to SSS
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+        <Image
+          resizeMode="contain"
+          style={{width: 300, height: 200}}
+          source={{uri: 'http://gif-finder.com/wp-content/uploads/2015/08/Leonardo-DiCaprio-OMG.gif'}}
+        />
       </View>
     );
   }
@@ -42,4 +40,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default UserListView;
+export default AssaListview;
