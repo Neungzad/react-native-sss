@@ -8,7 +8,7 @@ export default () => {
   // logger
   const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent
   const logger = createLogger({
-    predicate: isDebuggingInChrome,
+    predicate: (_a, _b) => isDebuggingInChrome,
     collapsed: true,
     duration: true
   })

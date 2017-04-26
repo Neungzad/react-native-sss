@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, ListView } from 'react-native';
 
-export interface Props {}
-export interface State {}
+export interface Props { }
+export interface State {
+  dataSource: any
+}
 
 class AssaListview extends Component<Props, State> {
+  constructor() {
+    super();
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    this.state = {
+      dataSource: ds.cloneWithRows(['row 1', 'row 2'])
+    };
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to SSS
+          Welcome to SSS 1
         </Text>
-        <Image
-          resizeMode="contain"
-          style={{width: 300, height: 200}}
-          source={{uri: 'http://gif-finder.com/wp-content/uploads/2015/08/Leonardo-DiCaprio-OMG.gif'}}
+
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => <Text>{rowData}</Text>}
         />
       </View>
     );
