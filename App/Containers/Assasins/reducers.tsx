@@ -1,13 +1,9 @@
-import {FETCH_ASSA_REQUEST, FETCH_ASSA_SUCCESS, ActionType, AssaObject} from './actionTypes'
-
-interface AssaState {
-  fetching: boolean
-  victims: Map<number, AssaObject>
-}
+import { FETCH_ASSA_REQUEST, FETCH_ASSA_SUCCESS, ActionType } from './actionTypes'
+import { AssaState } from '../../types'
 
 const initialState: AssaState = {
   fetching: false,
-  victims: new Map()
+  victims: {}
 }
 
 const assasinsReducer = (state = initialState, action: ActionType): AssaState => {
@@ -18,7 +14,13 @@ const assasinsReducer = (state = initialState, action: ActionType): AssaState =>
         fetching: true
       }
     case FETCH_ASSA_SUCCESS:
-      return state
+      return {
+        fetching: false,
+        victims: action.payload.reduce(function (result: any, item: any) {
+          result[item.id] = item
+          return result
+        }, {})
+      }
     default:
       return state
   }
