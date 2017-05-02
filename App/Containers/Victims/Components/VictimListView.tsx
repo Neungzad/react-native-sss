@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, View, ListView, ListViewDataSource } from 'react-native'
+import { Text, View, ListView, ListViewDataSource, ActivityIndicator } from 'react-native'
 import { loadVictims } from '../actions'
 import { AppState, Victim } from '../../../types'
 import styles from './Styles/VictimListViewStyles'
@@ -48,7 +48,7 @@ class VictimListView extends Component<Props, State> {
     return (
       <View style={styles.container}>
         {this.props.isFetching ? (
-          <Text>Loading...</Text>
+          <ActivityIndicator />
         ) : (
           this.renderListView(this.state.dataSource)
         )}
