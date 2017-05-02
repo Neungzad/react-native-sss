@@ -1,8 +1,8 @@
-import { FETCH_ASSA_REQUEST, FETCH_ASSA_SUCCESS } from './actionTypes'
+import { VICTIMS_REQUEST, VICTIMS_SUCCESS } from './actionTypes'
 
-const fetchAssaRequest = () => {
+const loadVictims = () => {
   return async (dispatch: any) => {
-    dispatch({ type: FETCH_ASSA_REQUEST })
+    dispatch({ type: VICTIMS_REQUEST })
 
     try {
       // fetch api
@@ -11,7 +11,7 @@ const fetchAssaRequest = () => {
 
       // dispatch action success
       dispatch({
-        type: FETCH_ASSA_SUCCESS,
+        type: VICTIMS_SUCCESS,
         payload: result
       })
     } catch (e) {
@@ -21,4 +21,4 @@ const fetchAssaRequest = () => {
 }
 
 
-export { fetchAssaRequest }
+export { loadVictims }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
-import { AssaObject } from '../../../types'
+import { Victim } from '../../../types'
 
 export interface Props {
-  data: AssaObject
+  data: Victim
 }
 
 export interface State { }

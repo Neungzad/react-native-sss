@@ -1,10 +1,10 @@
-export interface GlobalState {
-  assasins: AssaState
+export interface AppState {
+  victims: VictimsState
 }
 
-/********* Victim **********/
+/********* Victims State **********/
 
-export interface AssaObject {
+export interface Victim {
   id: number
   name: string
   imgPath: string
@@ -12,7 +12,7 @@ export interface AssaObject {
   reward: string
 }
 
-export interface AssaState {
-  fetching: boolean
-  victims: { [key: string]: AssaObject }
+export interface VictimsState {
+  isFetching: boolean
+  byId: { [key: string]: Victim }
 }

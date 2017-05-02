@@ -1,22 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Text, View, ListView, ListViewDataSource } from 'react-native'
-import { fetchAssaRequest } from '../actions'
-import { GlobalState, AssaObject } from '../../../types'
-import styles from './Styles/AssaListViewStyles'
+import { loadVictims } from '../actions'
+import { AppState, Victim } from '../../../types'
+import styles from './Styles/VictimListViewStyles'
 import VictimRecord from './VictimRecord'
 
 export interface Props {
-  fetching: boolean
-  fetchAssaList: () => void
-  victims: Array<AssaObject>
+  isFetching: boolean
+  loadVictims: () => void
+  victims: Array<Victim>
 }
 
 export interface State {
   dataSource: ListViewDataSource | undefined
 }
 
-class AssaListview extends Component<Props, State> {
+class VictimListView extends Component<Props, State> {
   ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
 
   constructor() {
@@ -25,7 +25,7 @@ class AssaListview extends Component<Props, State> {
   }
 
   componentDidMount() {
-    this.props.fetchAssaList()
+    this.props.loadVictims()
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -47,7 +47,7 @@ class AssaListview extends Component<Props, State> {
   render() {
     return (
       <View style={styles.container}>
-        {this.props.fetching ? (
+        {this.props.isFetching ? (
           <Text>Loading...</Text>
         ) : (
           this.renderListView(this.state.dataSource)
@@ -57,17 +57,17 @@ class AssaListview extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => {
+const mapStateToProps = (state: AppState) => {
   return {
-    fetching: state.assasins.fetching,
-    victims: Object.keys(state.assasins.victims).map(key => state.assasins.victims[key])
+    isFetching: state.victims.isFetching,
+    victims: Object.keys(state.victims.byId).map(key => state.victims.byId[key])
   }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    fetchAssaList: () => dispatch(fetchAssaRequest())
+    loadVictims: () => dispatch(loadVictims())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssaListview)
+export default connect(mapStateToProps, mapDispatchToProps)(VictimListView)
