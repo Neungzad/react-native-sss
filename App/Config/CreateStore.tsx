@@ -17,5 +17,17 @@ export default () => {
   const createETStore = applyMiddleware(thunk, logger)(createStore)
   const store = autoRehydrate()(createETStore)(RootReducer)
 
+  // AsyncStorage
+  /*const configStore = {
+    blacklist: [],
+    storage: AsyncStorage
+  }
+
+  persistStore(store, configStore, () => {
+    const state = store.getState()
+
+    console.log('load persistStore completed = ', state)
+  })*/
+
   return store
 }
