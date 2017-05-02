@@ -20,5 +20,4 @@ const loadVictims = () => {
   }
 }
 
-
 export { loadVictims }
