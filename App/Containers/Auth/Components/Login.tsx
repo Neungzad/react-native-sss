@@ -17,6 +17,10 @@ export interface Props { }
 export interface State { }
 
 class Login extends Component<Props, State> {
+  public refs: {
+    login: any;
+  };
+
   constructor() {
     super()
 

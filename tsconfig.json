@@ -21,6 +21,9 @@
     "App/**/*.ts",
     "App/**/*.tsx"
   ],
+  "files": [
+    "App/Types/tcomb-form-native.d.ts"
+  ],
   "types": [
     "react",
     "react-native",
