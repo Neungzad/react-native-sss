@@ -1,1 +1,1 @@
-declare module "tcomb-form-native.d.ts"
+declare module "tcomb-form-native"
