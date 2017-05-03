@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StatusBar, StyleSheet } from 'react-native'
-import VictimListView from '../Containers/Victims/Components/VictimListView'
+import NavigationRouter from '../Navigation/NavigationRouter'
 
 export interface Props { }
 export interface State { }
@@ -10,7 +10,7 @@ class RootContainer extends Component<Props, State> {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
-        <VictimListView />
+        <NavigationRouter />
       </View>
     )
   }

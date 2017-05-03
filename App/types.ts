@@ -1,5 +1,6 @@
 export interface AppState {
-  victims: VictimsState
+  victims: VictimsState,
+  auth: AuthState
 }
 
 /********* Victims State **********/
@@ -15,4 +16,14 @@ export interface Victim {
 export interface VictimsState {
   isFetching: boolean
   byId: { [key: string]: Victim }
+}
+
+/********* Auth State *********/
+
+export interface AuthState {
+  isFetching: boolean
+  token?: string
+  ttl?: number
+  created?: Date
+  userId?: number
 }
