@@ -34,7 +34,7 @@ class Login extends Component<Props, State> {
     this.onPress = this.onPress.bind(this)
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
+  componentDidUpdate(_prevProps: Props, _prevState: State) {
     if (this.props.auth.userId) {
       Actions.victimListView()
     }
