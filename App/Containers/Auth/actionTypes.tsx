@@ -4,6 +4,9 @@ import { AuthState } from '../../types'
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
 
 // type script
 export interface ActionLogingRequest {
@@ -19,4 +22,12 @@ export interface ActionLoginSuccess {
   payload: AuthState
 }
 
-export type ActionType = ActionLogingRequest | ActionLoginSuccess
+export interface ActionLogoutRequest {
+  type: 'LOGOUT_REQUEST'
+}
+
+export interface ActionLogoutSuccess {
+  type: 'LOGOUT_SUCCESS'
+}
+
+export type ActionType = ActionLogingRequest | ActionLoginSuccess | ActionLogoutRequest | ActionLogoutSuccess

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
 import { Victim } from '../../../types'
 import styles from './Styles/VictimRecordStyles'
+import appConfig from '../../../Config/appConfig'
 
 export interface Props {
   data: Victim
@@ -16,7 +17,7 @@ class VictimRecord extends Component<Props, State> {
         <Image
           resizeMode="contain"
           style={styles.profile}
-          source={{uri: this.props.data.imgPath}}
+          source={{uri: `${appConfig.IMG_URL}/${this.props.data.imgPath}` }}
         />
         <View style={styles.content}>
           <View style={styles.topSide}>

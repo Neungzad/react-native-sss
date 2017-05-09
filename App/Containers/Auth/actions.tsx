@@ -1,4 +1,6 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS } from './actionTypes'
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_REQUEST, LOGOUT_SUCCESS } from './actionTypes'
+import appConfig from '../../Config/appConfig'
+import { Actions } from 'react-native-router-flux'
 
 const login = (email: string, password: string) => {
   return async (dispatch: any) => {
@@ -6,7 +8,7 @@ const login = (email: string, password: string) => {
 
     try {
       // fetch api
-      const res = await fetch('http://localhost:3000/api/KillerUsers/login', {
+      const res = await fetch(`${appConfig.API_URL}/KillerUsers/login`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -37,4 +39,36 @@ const login = (email: string, password: string) => {
   }
 }
 
-export { login }
+const logout = () => {
+  return async (dispatch: any, getState: any) => {
+    dispatch({ type: LOGOUT_REQUEST })
+    const state = getState()
+
+    try {
+      // fetch api
+      const res = await fetch(`${appConfig.API_URL}/KillerUsers/logout`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': state.auth.token
+        }
+      })
+
+      if (res.status === 204) {
+        dispatch({
+          type: LOGOUT_SUCCESS
+        })
+
+        Actions.login()
+      } else {
+        const result = await res.json()
+        alert(result.error.message)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+}
+
+export { login, logout }

@@ -4,7 +4,8 @@ import RootReducer from '../Containers/RootReducer'
 import { createLogger } from 'redux-logger'
 import { autoRehydrate, persistStore } from 'redux-persist'
 import { AsyncStorage } from 'react-native'
-// import { Actions } from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux'
+import { AppState } from '../types'
 
 export default () => {
   // logger
@@ -17,7 +18,7 @@ export default () => {
 
   // config store
   const createETStore = applyMiddleware(thunk, logger)(createStore)
-  const store = autoRehydrate()(createETStore)(RootReducer)
+  const store = autoRehydrate<AppState>()(createETStore)(RootReducer)
 
   // AsyncStorage
   const configStore = {
@@ -28,8 +29,13 @@ export default () => {
   persistStore(store, configStore, () => {
     const state = store.getState()
 
+    if (state.auth.userId) {
+      Actions.victimListView()
+    } else {
+      Actions.login()
+    }
+
     console.log('load persistStore completed = ', state)
-    // // Actions.victimListView()
   })
 
   return store
