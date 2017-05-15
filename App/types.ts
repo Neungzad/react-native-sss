@@ -8,9 +8,16 @@ export interface AppState {
 export interface Victim {
   id: number
   name: string
-  imgPath: string
+  imgPath?: string
   nickname: string
-  reward: string
+  reward: string,
+  userId: number,
+  image?: {
+    data: string,
+    type: string,
+    uri: string,
+    fileName: string
+  }
 }
 
 export interface VictimsState {

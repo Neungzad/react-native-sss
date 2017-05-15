@@ -9,7 +9,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'stretch',
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     marginVertical: 5,
     backgroundColor: Colors.snow,
     paddingVertical: 20

@@ -34,8 +34,6 @@ export default () => {
     } else {
       Actions.login()
     }
-
-    console.log('load persistStore completed = ', state)
   })
 
   return store

@@ -1,4 +1,4 @@
-import { VICTIMS_REQUEST, VICTIMS_SUCCESS, ActionType } from './actionTypes'
+import { VICTIMS_REQUEST, VICTIMS_SUCCESS, VICTIM_ADD_SUCCESS, ActionType } from './actionTypes'
 import { VictimsState } from '../../types'
 
 const initialState: VictimsState = {
@@ -20,6 +20,13 @@ const assasinsReducer = (state = initialState, action: ActionType): VictimsState
           result[item.id] = item
           return result
         }, {})
+      }
+    case VICTIM_ADD_SUCCESS:
+      let victims = {...state.byId}
+      victims[action.payload.id] = action.payload
+      return {
+        ...state,
+        byId: victims
       }
     default:
       return state

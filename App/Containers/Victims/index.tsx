@@ -1,3 +1,5 @@
 import VictimListView from './Components/VictimListView'
+import VictimForm from './Components/VictimForm'
+import VictimDetail from './Components/VictimDetail'
 
-export {VictimListView}
+export { VictimListView, VictimForm, VictimDetail }
