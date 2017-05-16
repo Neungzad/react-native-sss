@@ -1,4 +1,4 @@
-import { VICTIMS_REQUEST, VICTIMS_SUCCESS, VICTIM_ADD_SUCCESS, ActionType } from './actionTypes'
+import { VICTIMS_REQUEST, VICTIMS_SUCCESS, VICTIM_ADD_SUCCESS, VICTIM_ADD_REQUEST, ActionType } from './actionTypes'
 import { VictimsState } from '../../types'
 
 const initialState: VictimsState = {
@@ -9,6 +9,7 @@ const initialState: VictimsState = {
 const assasinsReducer = (state = initialState, action: ActionType): VictimsState => {
   switch (action.type) {
     case VICTIMS_REQUEST:
+    case VICTIM_ADD_REQUEST:
       return {
         ...state,
         isFetching: true

@@ -5,7 +5,7 @@ import styles from './Styles/VictimFormStyles'
 import t from 'tcomb-form-native'
 import { Actions } from 'react-native-router-flux'
 import { addVictim } from '../actions'
-import { Victim } from '../../../types'
+import { Victim, ImageType, AppState } from '../../../types'
 import ImagePicker from 'react-native-image-picker'
 
 const imgPickerOptions = {
@@ -31,13 +31,13 @@ const victim = t.struct({
 const options = {}
 
 interface Props {
-  addVictim: (victimForm: Victim) => void
+  addVictim: (victimForm: Victim, image: ImageType) => void
+  isFetching: boolean
 }
+
 interface State {
-  img?: {
-    uri: string
-  }
- }
+  img?: ImageType
+}
 
 class VictimForm extends Component<Props, State> {
   public refs: { victimForm: any }
@@ -60,13 +60,21 @@ class VictimForm extends Component<Props, State> {
     })
   }
 
+  componentDidUpdate(prevProps: Props) {
+    if (!prevProps.isFetching && this.props.isFetching) {
+      Actions.statusModal()
+    }
+
+    if (prevProps.isFetching && !this.props.isFetching) {
+      Actions.pop()
+    }
+  }
+
   onPress() {
     const value = this.refs.victimForm.getValue()
-    if (value) {
-      this.props.addVictim({
-        ...value,
-        image: this.state.img
-      })
+
+    if (value && this.state.img) {
+      this.props.addVictim(value, this.state.img)
     }
   }
 
@@ -108,10 +116,16 @@ class VictimForm extends Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapStateToProps = (state: AppState) => {
   return {
-    addVictim: (victimForm: Victim) => dispatch(addVictim(victimForm))
+    isFetching: state.victims.isFetching
   }
 }
 
-export default connect(undefined, mapDispatchToProps)(VictimForm)
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    addVictim: (victimForm: Victim, image: ImageType) => dispatch(addVictim(victimForm, image))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VictimForm)

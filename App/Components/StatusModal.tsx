@@ -7,7 +7,7 @@ interface Props {
 interface State { }
 
 class StatusModal extends React.Component<Props, State> {
-  public defaultProps = {
+  public static defaultProps: Props = {
     message: 'Loading...'
   }
 

@@ -1,6 +1,6 @@
-import { VICTIMS_REQUEST, VICTIMS_SUCCESS, VICTIM_ADD_SUCCESS } from './actionTypes'
+import { VICTIMS_REQUEST, VICTIMS_SUCCESS, VICTIM_ADD_SUCCESS, VICTIM_ADD_REQUEST } from './actionTypes'
 import appConfig from '../../Config/appConfig'
-import { Victim } from '../../types'
+import { Victim, ImageType } from '../../types'
 import { Actions } from 'react-native-router-flux'
 
 const loadVictims = () => {
@@ -36,10 +36,79 @@ const loadVictims = () => {
   }
 }
 
-const addVictim = (victimForm: Victim) => {
+
+const addVictim = (victimForm: Victim, image: ImageType) => {
   return async (dispatch: any, getState: any) => {
+    dispatch({ type: VICTIM_ADD_REQUEST })
+
     const state = getState()
-    let formdata = new FormData()
+
+    try {
+      // image
+      let formdata = new FormData()
+      let file: any = {
+        uri: image.uri,
+        type: image.type,
+        name: image.fileName
+      }
+      formdata.append('file', file)
+
+      // upload img
+      const res = await fetch(`${appConfig.API_URL}/Victims/upload`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': state.auth.token
+        },
+        body: formdata
+      })
+
+      const result = await res.json()
+      if (result.error) {
+        // dispatch fail
+      } else {
+
+        // add victim
+        const resAdd = await fetch(`${appConfig.API_URL}/Victims`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': state.auth.token
+          },
+          body: JSON.stringify({
+            name: victimForm.name,
+            nickname: victimForm.nickname,
+            reward: victimForm.reward,
+            imgPath: result.name,
+            user_id: state.auth.userId
+          })
+        })
+
+        const resultAdd = await resAdd.json()
+        if (resultAdd.error) {
+          // TODO::dispatch fail
+          alert(resultAdd.error.message)
+        } else {
+          dispatch({
+            type: VICTIM_ADD_SUCCESS,
+            payload: resultAdd
+          })
+        }
+      }
+    } catch (e) {
+      // TODO::dispatch fail
+      console.log(e)
+    }
+
+
+    /*try {
+      // fetch api
+    } catch (e) {
+      console.log(e)
+    }*/
+
+    /*let formdata = new FormData()
 
     if (victimForm.image) {
       try {
@@ -50,6 +119,7 @@ const addVictim = (victimForm: Victim) => {
         }
 
         formdata.append('file', file)
+
         formdata.append('name', victimForm.name)
         formdata.append('nickname', victimForm.nickname)
         formdata.append('reward', victimForm.reward)
@@ -76,7 +146,8 @@ const addVictim = (victimForm: Victim) => {
       } catch (err) {
         console.log(err)
       }
-    }
+    }*/
+
   }
 }
 
