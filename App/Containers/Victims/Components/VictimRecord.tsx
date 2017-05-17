@@ -12,7 +12,6 @@ export interface Props {
 export interface State { }
 
 class VictimRecord extends Component<Props, State> {
-  console.log(appConfig.IMG_URL + ' ' + this.props.data.imgPath);
 
   render() {
     return (

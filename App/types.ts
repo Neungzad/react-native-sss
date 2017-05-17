@@ -30,11 +30,12 @@ export interface Victim {
   imgPath?: string
   nickname: string
   reward: string
-  userId: number
+  user_id: number
 }
 
 export interface VictimsState {
   isFetching: boolean
+  isUpdated: boolean
   byId: { [key: string]: Victim }
 }
 

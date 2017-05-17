@@ -33,10 +33,20 @@ const options = {}
 interface Props {
   addVictim: (victimForm: Victim, image: ImageType) => void
   isFetching: boolean
+  isUpdated: boolean
+  id: number
+  victim: Victim | undefined
 }
 
 interface State {
   img?: ImageType
+  victimForm?: Form
+}
+
+interface Form {
+  name: string
+  nickname: string
+  reward: number
 }
 
 class VictimForm extends Component<Props, State> {
@@ -48,9 +58,9 @@ class VictimForm extends Component<Props, State> {
     this.state = {
       img: undefined
     }
-
     this.onPress = this.onPress.bind(this)
     this.onUpload = this.onUpload.bind(this)
+    this.onChangeForm = this.onChangeForm.bind(this)
   }
 
   componentDidMount() {
@@ -67,6 +77,12 @@ class VictimForm extends Component<Props, State> {
 
     if (prevProps.isFetching && !this.props.isFetching) {
       Actions.pop()
+
+      if (this.props.isUpdated) {
+        setTimeout(() => {
+          Actions.pop()
+        }, 500)
+      }
     }
   }
 
@@ -99,6 +115,12 @@ class VictimForm extends Component<Props, State> {
     })
   }
 
+  onChangeForm(value: Form) {
+    this.setState({
+      victimForm: value
+    })
+  }
+
   render() {
     return (
       <View style={styles.container} >
@@ -110,15 +132,18 @@ class VictimForm extends Component<Props, State> {
           ref="victimForm"
           type={victim}
           options={options}
+          value={this.state.victimForm}
+          onChange={this.onChangeForm}
         />
       </View>
     )
   }
 }
 
-const mapStateToProps = (state: AppState) => {
+const mapStateToProps = (state: AppState, _ownProps: Props) => {
   return {
-    isFetching: state.victims.isFetching
+    isFetching: state.victims.isFetching,
+    isUpdated: state.victims.isUpdated
   }
 }
 

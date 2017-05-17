@@ -2,6 +2,7 @@ import { VICTIMS_REQUEST, VICTIMS_SUCCESS, VICTIM_ADD_SUCCESS, VICTIM_ADD_REQUES
 import appConfig from '../../Config/appConfig'
 import { Victim, ImageType } from '../../types'
 import { Actions } from 'react-native-router-flux'
+import { AppState } from '../../types'
 
 const loadVictims = () => {
   return async (dispatch: any, getState: any) => {
@@ -36,36 +37,21 @@ const loadVictims = () => {
   }
 }
 
-
 const addVictim = (victimForm: Victim, image: ImageType) => {
   return async (dispatch: any, getState: any) => {
     dispatch({ type: VICTIM_ADD_REQUEST })
 
-    const state = getState()
+    const state: AppState = getState()
 
     try {
-      // image
-      let formdata = new FormData()
-      let file: any = {
-        uri: image.uri,
-        type: image.type,
-        name: image.fileName
+      let result
+      if (state.auth.token) {
+        result = await uploadImg(image, state.auth.token)
       }
-      formdata.append('file', file)
 
-      // upload img
-      const res = await fetch(`${appConfig.API_URL}/Victims/upload`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': state.auth.token
-        },
-        body: formdata
-      })
-
-      const result = await res.json()
       if (result.error) {
         // dispatch fail
+
       } else {
 
         // add victim
@@ -100,55 +86,34 @@ const addVictim = (victimForm: Victim, image: ImageType) => {
       // TODO::dispatch fail
       console.log(e)
     }
-
-
-    /*try {
-      // fetch api
-    } catch (e) {
-      console.log(e)
-    }*/
-
-    /*let formdata = new FormData()
-
-    if (victimForm.image) {
-      try {
-        let file: any = {
-          uri: victimForm.image.uri,
-          type: victimForm.image.type,
-          name: victimForm.image.fileName
-        }
-
-        formdata.append('file', file)
-
-        formdata.append('name', victimForm.name)
-        formdata.append('nickname', victimForm.nickname)
-        formdata.append('reward', victimForm.reward)
-        formdata.append('userId', state.auth.userId)
-
-        const res = await fetch(`${appConfig.API_URL}/Victims/upload`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': state.auth.token
-          },
-          body: formdata
-        })
-
-        const result = await res.json()
-        if (result.error) {
-          alert(result.error.message)
-        } else {
-          dispatch({
-            type: VICTIM_ADD_SUCCESS,
-            payload: result
-          })
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    }*/
-
   }
 }
 
-export { loadVictims, addVictim }
+const editVictim = (victimForm: Victim, image: ImageType) => {
+
+}
+
+const uploadImg = async (image: ImageType, token: string) => {
+  // image
+  let formdata = new FormData()
+  let file: any = {
+    uri: image.uri,
+    type: image.type,
+    name: image.fileName
+  }
+  formdata.append('file', file)
+
+  // upload img
+  const res = await fetch(`${appConfig.API_URL}/Victims/upload`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': token
+    },
+    body: formdata
+  })
+
+  return res.json()
+}
+
+export { loadVictims, addVictim, editVictim }

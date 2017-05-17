@@ -7,19 +7,29 @@ import { Actions } from 'react-native-router-flux'
 
 interface Props {
   id: number,
-  victim: Victim
+  victim: Victim,
+  userId: number
 }
 interface State { }
 
 class VictimDetail extends Component<Props, State> {
   componentDidMount() {
-    Actions.refresh({
-      title: this.props.victim.name,
-      rightTitle: 'Edit',
-      onRight: () => {
-        alert(this.props.id)
+    let option: any = {
+      title: this.props.victim.name
+    }
+
+    // owner can edit
+    if (this.props.userId === this.props.victim.user_id) {
+      option.rightTitle = 'Edit'
+      option.onRight = () => {
+        Actions.editVictim({
+          id: this.props.id
+        })
       }
-    })
+    }
+
+    console.log(this.props)
+    Actions.refresh(option)
   }
 
   render() {
@@ -37,6 +47,7 @@ class VictimDetail extends Component<Props, State> {
 
 const mapStateToProps = (state: AppState, ownProps: Props) => {
   return {
+    userId: state.auth.userId,
     victim: state.victims.byId[ownProps.id]
   }
 }

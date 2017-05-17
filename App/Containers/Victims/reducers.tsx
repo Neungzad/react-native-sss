@@ -3,6 +3,7 @@ import { VictimsState } from '../../types'
 
 const initialState: VictimsState = {
   isFetching: false,
+  isUpdated: false,
   byId: {}
 }
 
@@ -12,10 +13,12 @@ const assasinsReducer = (state = initialState, action: ActionType): VictimsState
     case VICTIM_ADD_REQUEST:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        isUpdated: false
       }
     case VICTIMS_SUCCESS:
       return {
+        ...state,
         isFetching: false,
         byId: action.payload.reduce(function (result: any, item: any) {
           result[item.id] = item
@@ -27,6 +30,8 @@ const assasinsReducer = (state = initialState, action: ActionType): VictimsState
       victims[action.payload.id] = action.payload
       return {
         ...state,
+        isFetching: false,
+        isUpdated: true,
         byId: victims
       }
     default:

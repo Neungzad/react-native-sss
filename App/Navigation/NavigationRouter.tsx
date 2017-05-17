@@ -23,6 +23,7 @@ class NavigationRouter extends Component<Props, State> {
                 rightTitle="Add" onRight={() => Actions.addVictim()}
           />
           <Scene key="addVictim" component={VictimForm} title="New Victim" direction="vertical" />
+          <Scene key="editVictim" component={VictimForm} title="Edit Victim" direction="vertical" />
           <Scene key="showVictim" component={VictimDetail} title="Detail" />
         </Scene>
         <Scene key="statusModal" component={StatusModal} />

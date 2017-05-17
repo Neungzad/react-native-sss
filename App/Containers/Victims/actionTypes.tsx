@@ -9,6 +9,10 @@ export const VICTIM_ADD_REQUEST = 'VICTIM_ADD_REQUEST'
 export const VICTIM_ADD_SUCCESS = 'VICTIM_ADD_SUCCESS'
 export const VICTIM_ADD_FAILURE = 'VICTIM_ADD_FAILURE'
 
+export const VICTIM_EDIT_REQUEST = 'VICTIM_EDIT_REQUEST'
+export const VICTIM_EDIT_SUCCESS = 'VICTIM_EDIT_SUCCESS'
+export const VICTIM_EDIT_FAILURE = 'VICTIM_EDIT_FAILURE'
+
 // type script
 export interface ActionVictimsRequest {
   type: 'VICTIMS_REQUEST'
@@ -27,5 +31,7 @@ export interface ActionVictimAddSuccess {
 export interface ActionVictimAddRequest {
   type: 'VICTIM_ADD_REQUEST'
 }
+
+
 
 export type ActionType = ActionVictimsRequest | ActionVictimsSuccess | ActionVictimAddSuccess | ActionVictimAddRequest
